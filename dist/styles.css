@@ -40,6 +40,7 @@
 .hero-actions,.footer-top>div{flex-wrap:wrap}
 .product-dialog{height:92vh;max-height:92vh;height:92dvh;max-height:92dvh}
 @media(max-width:760px){
+  .hero-visual .roundel{display:none}
   .mobile-order{bottom:calc(16px + env(safe-area-inset-bottom,0px));left:max(6vw,env(safe-area-inset-left,0px));right:max(6vw,env(safe-area-inset-right,0px))}
   footer{padding-bottom:calc(105px + env(safe-area-inset-bottom,0px))}
   .product-dialog{height:100vh;max-height:100vh;height:100dvh;max-height:100dvh;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
