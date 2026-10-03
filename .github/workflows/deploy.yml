@@ -1,0 +1,58 @@
+name: Quality and delivery
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bindu-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verify site and release policy
+        run: |
+          npm run validate
+          npm run check:release
+
+  deploy:
+    name: Publish production
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.DEPLOYMENT_ENABLED == 'true'
+    environment: production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install pinned deployment tools
+        run: npm ci --no-audit --no-fund
+      - name: Publish verified production target
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT_NAME: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          CLOUDFLARE_EXPECTED_HOSTNAME: ${{ secrets.CLOUDFLARE_EXPECTED_HOSTNAME }}
+        run: npm run deploy:production
