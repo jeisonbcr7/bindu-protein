@@ -1,0 +1,15 @@
+node_modules/
+.wrangler/
+.openai/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p12
+*.log
+*.zip
+.DS_Store
+.vscode/
+coverage/
