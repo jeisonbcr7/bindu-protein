@@ -2,6 +2,7 @@
 
 - Este repositorio es la fuente del sitio y de sus despliegues. Trabajar en `develop`; promover cambios mediante pull request a `main`.
 - `main` representa producción. No hacer cambios directos ni usar otros canales de publicación para este proyecto.
+- El merge de `develop` a `main` lo realiza manualmente la persona responsable del repositorio. El agente prepara el pull request y comprueba las validaciones; no hace merge ni activa auto-merge.
 - Editar el sitio en `dist/`. Conservar español de Costa Rica, adaptación móvil, navegación accesible y datos de menú confirmados.
 - Mantener los contactos comerciales ya aprobados en el sitio. No repetir datos de contacto en documentación técnica.
 - No introducir precios, nombres de proveedores ni atribuciones personales no solicitadas.
